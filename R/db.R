@@ -5,13 +5,13 @@ library(stringr)
 
 steam <- read_html("https://store.steampowered.com/search/?filter=topsellers&specials=1")
 
-ofertas_especiais_precos <- steam %>%
+precos<- steam %>%
   html_elements("div.search_price") %>%
   html_text2 %>%
   strsplit(split=" ") %>%
-  repair_names()
-
-precos <- as.tibble(ofertas_especiais_precos)%>%
+  repair_names() %>%
+  as.data.frame() %>%
+  as.tibble()%>%
   slice(4) %>%
   gather(Moeda, Preços) %>%
   transmute(Preço = Preços)
@@ -19,6 +19,6 @@ precos <- as.tibble(ofertas_especiais_precos)%>%
 nomes <- steam %>%
   html_elements(".title") %>%
   html_text()
-tabela <- data.frame(nomes=c(nomes),preços=c(precos)) %>%
+tabela <- data.frame(Nome=c(nomes),Preço=c(precos)) %>%
   as.tibble()
 tabela
