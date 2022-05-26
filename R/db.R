@@ -5,6 +5,7 @@ library(stringr)
 
 steam <- read_html("https://store.steampowered.com/search/?filter=topsellers&specials=1")
 novidades <- read_html("https://store.steampowered.com/explore/new/")
+
 precos<- steam %>%
   html_elements("div.search_price") %>%
   html_text2 %>%
