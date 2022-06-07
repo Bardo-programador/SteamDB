@@ -21,7 +21,7 @@ precos<- steam %>%
 nomes <- steam %>%
   html_elements(".title") %>%
   html_text()
-ofertas <- data.frame(Nome=c(nomes),Preço=c(precos)) %>%
+tabela_ofertas <- data.frame(Nome=c(nomes),Preço=c(precos)) %>%
   as.tibble()
 
 
@@ -33,8 +33,8 @@ nov_precos <- novidades %>%
   html_elements("div#tab_newreleases_content") %>%
   html_elements("div.discount_final_price") %>%
   html_text2()
-novidades_populares <- data.frame(Nome=c(nov_nomes),Preço=c(nov_precos)) %>%
+tabela_novidades_populares <- data.frame(Nome=c(nov_nomes),Preço=c(nov_precos)) %>%
     as.tibble()
 
-  novidades_populares
-  ofertas
+  tabela_novidades_populares
+  tabela_ofertas
