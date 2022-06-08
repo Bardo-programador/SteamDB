@@ -2,7 +2,6 @@ library(rvest)
 library(tidyverse)
 library(dplyr)
 library(stringr)
-
 steam <- read_html("https://store.steampowered.com/search/?filter=topsellers&specials=1")
 novidades <- read_html("https://store.steampowered.com/explore/new/")
 
@@ -35,6 +34,3 @@ nov_precos <- novidades %>%
 tabela_novidades_populares <- data.frame(Nome=c(nov_nomes),Preço=c(nov_precos)) %>%
     as.tibble()
 write.table(tabela_novidades_populares, 'novidades.csv',sep = "," , row.names = FALSE)
-
-  tabela_novidades_populares
-  tabela_ofertas
