@@ -1,0 +1,44 @@
+---
+title: "Dashboard Steam"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(rvest)
+library(tidyverse)
+tabela_ofertas <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/ofertas.csv")
+tabela_novidades_populares <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/novidades.csv")
+```
+
+# Loja de Jogos
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Ofertas
+
+```{r}
+tabela_ofertas %>% 
+  knitr::kable()
+```
+
+Column {data-width=500}
+-----------------------------------------------------------------------
+
+### Novidades Populares
+
+```{r}
+tabela_novidades_populares %>% 
+  knitr::kable()
+```
+
+#  Mercado
+Column {data-width-1000}
+-----------------------------------------------------------------------------------
+###Histórico
+```{r}
+```

@@ -23,8 +23,7 @@ nomes <- steam %>%
   html_text()
 tabela_ofertas <- data.frame(Nome=c(nomes),Preço=c(precos)) %>%
   as.tibble()
-
-
+write.table(tabela_ofertas, 'ofertas.csv',sep = "," , row.names = FALSE)
 
 nov_nomes <- novidades %>%
   html_elements(".tab_item_name") %>%
@@ -35,6 +34,7 @@ nov_precos <- novidades %>%
   html_text2()
 tabela_novidades_populares <- data.frame(Nome=c(nov_nomes),Preço=c(nov_precos)) %>%
     as.tibble()
+write.table(tabela_novidades_populares, 'novidades.csv',sep = "," , row.names = FALSE)
 
   tabela_novidades_populares
   tabela_ofertas
