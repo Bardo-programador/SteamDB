@@ -3,7 +3,7 @@ title: "Dashboard Steam"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
-    vertical_layout: fill
+    vertical_layout: scroll
 runtime: shiny
 ---
 
@@ -13,10 +13,11 @@ library(rvest)
 library(tidyverse)
 tabela_ofertas <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/ofertas.csv")
 tabela_novidades_populares <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/novidades.csv")
+tabela_mercado <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/mercado.csv")
 ```
 
 # Loja de Jogos
-Column {data-width=500}
+Column {data-width=600}
 -----------------------------------------------------------------------
 
 ### Ofertas
@@ -26,7 +27,7 @@ tabela_ofertas %>%
   knitr::kable()
 ```
 
-Column {data-width=500}
+Column {data-width=400}
 -----------------------------------------------------------------------
 
 ### Novidades Populares
@@ -37,8 +38,22 @@ tabela_novidades_populares %>%
 ```
 
 #  Mercado
-Column {data-width-1000}
------------------------------------------------------------------------------------
-###Histórico
+
+Column {data-width=500}
+---------------------------------------------------------------
+### Gráfico de Itens
 ```{r}
+ggplot(tabela_mercado) +
+  aes(x = Quantidade, y = Preço) +
+  geom_tile(size = 1.2) +
+  scale_fill_hue(direction = 1) +
+  coord_flip() +
+  theme_linedraw() 
+```
+
+Column {data-width=500}
+---------------------------------------------------------------
+```{r}
+tabela_mercado %>%
+  knitr::kable()
 ```
