@@ -11,9 +11,9 @@ runtime: shiny
 library(flexdashboard)
 library(rvest)
 library(tidyverse)
-tabela_ofertas <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/ofertas.csv")
-tabela_novidades_populares <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/novidades.csv")
-tabela_mercado <- read.csv("C:/Users/Carvalho/Documents/R Projects/SteamDB/mercado.csv")
+tabela_ofertas <- read.csv("../ofertas.csv")
+tabela_novidades_populares <- read.csv("../novidades.csv")
+tabela_mercado <- read.csv("../mercado.csv")
 ```
 
 # Loja de Jogos
