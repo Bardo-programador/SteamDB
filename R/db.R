@@ -16,14 +16,16 @@ precos<- steam %>%
   gather(Moeda, Preços) %>%
   mutate(Moeda = "R$",Preço = Preços
          ) %>%
-  transmute(Preço = paste(Moeda,Preço))
+  transmute(Preço = paste(Moeda,Preço)) %>%
+  mutate(Preço = gsub("R\\$","",Preço)) %>%
+  mutate(Preço = as.numeric(gsub(",",".",Preço)))
 nomes <- steam %>%
   html_elements(".title") %>%
   html_text()
 tabela_ofertas <- data.frame(Nome=c(nomes),Preço=c(precos)) %>%
   as.tibble() %>%
-  mutate(Preço = gsub("R\\$","",Preço)) %>%
-  mutate(Preço = as.numeric(gsub(",",".",Preço)))
+
+
 write.table(tabela_ofertas, 'ofertas.csv',sep = "," , row.names = FALSE)
 
 nov_nomes <- novidades %>%
@@ -32,15 +34,13 @@ nov_nomes <- novidades %>%
 nov_precos <- novidades %>%
   html_elements("div#tab_newreleases_content") %>%
   html_elements("div.discount_final_price") %>%
-  html_text2()
-tabela_novidades_populares <- data.frame(Nome=c(nov_nomes),Preço=c(nov_precos)) %>%
-    as.tibble() %>%
-  mutate(Preço = gsub("R\\$","",Preço)) %>%
+  html_text2()%>%
+  as.tibble() %>%
+  transmute(Preço = gsub("R\\$","", value)) %>%
   mutate(Preço = gsub(",",".",Preço)) %>%
   mutate(Preço = gsub("Free","0.00",Preço)) %>%
   mutate(Preço = gsub("To Play","",Preço)) %>%
   mutate(Preço = as.numeric(gsub("to Play","",Preço)))
-
-
-
-write.table(tabela_novidades_populares, file = 'novidades.csv',sep = " " , row.names = FALSE)
+tabela_novidades_populares <- data.frame(Nome=c(nov_nomes),Preço=c(nov_precos)) %>%
+  as.tibble()
+write.table(tabela_novidades_populares, file = 'novidades.csv',sep = "," , row.names = FALSE)
