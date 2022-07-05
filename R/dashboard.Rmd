@@ -3,7 +3,7 @@ title: "Dashboard Steam"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
-    vertical_layout: fill
+    vertical_layout: scroll
 runtime: shiny
 ---
 
@@ -11,30 +11,46 @@ runtime: shiny
 library(flexdashboard)
 library(rvest)
 library(tidyverse)
+library(DT)
 tabela_ofertas <- read.csv("../ofertas.csv")
 tabela_novidades_populares <- read.csv("../novidades.csv")
 tabela_mercado <- read.csv("../mercado.csv")
 ```
 
 # Loja de Jogos
-Column {data-width=600}
+
+Column {.sidebar}
+------------------------------------------------------------------------
+
+```{r}
+sliderInput("slider",label = "Preço máximo", min = 0, max = max(tabela_novidades_populares$Preço), value = 20, step = 10)
+```
+
+Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Ofertas
 
 ```{r}
-tabela_ofertas %>% 
-  knitr::kable()
+    renderDataTable({tabela_ofertas %>% 
+    filter(`Preço` <= input$slider) %>% 
+    datatable(rownames = FALSE) %>% 
+    formatRound(c('Preço'),digits = 2)
+    })
+
 ```
 
-Column {data-width=400}
+Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Novidades Populares
 
 ```{r}
-tabela_novidades_populares %>% 
-  knitr::kable()
+renderDataTable({tabela_novidades_populares %>% 
+    filter(`Preço` <= input$slider) %>% 
+    datatable(rownames = FALSE) %>% 
+    formatRound(c('Preço'),digits = 2)
+    })
 ```
 
 #  Mercado
