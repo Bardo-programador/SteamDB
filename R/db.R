@@ -23,7 +23,7 @@ nomes <- steam %>%
   html_elements(".title") %>%
   html_text()
 tabela_ofertas <- data.frame(Nome=c(nomes),Preço=c(precos)) %>%
-  as.tibble() %>%
+  as.tibble()
 
 
 write.table(tabela_ofertas, 'ofertas.csv',sep = "," , row.names = FALSE)
