@@ -8,9 +8,10 @@ novidades <- read_html("https://store.steampowered.com/explore/new/")
 precos<- steam %>%
   html_elements("div.search_price") %>%
   html_text2 %>%
-  strsplit(split=" ") %>%
-  repair_names() %>%
-  as.data.frame() %>%
+  as_tibble() %>%
+  mutate(value = gsub("Free","R$ 0,00", value)) %>%
+  as_vector() %>%
+  strsplit(split = " ") %>%
   as.tibble()%>%
   slice(4) %>%
   gather(Moeda, Preços) %>%
